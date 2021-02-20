@@ -22,7 +22,6 @@ class CreateApplicationsTable extends Migration
             $table->string('board');
             $table->string('year');
             $table->decimal('percentage', 5,2);
-            $table->longText('work_experience');
             $table->string('gender');
             $table->longText('language');
             $table->longText('technical_experience');

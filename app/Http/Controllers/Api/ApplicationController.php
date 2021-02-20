@@ -15,10 +15,14 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $applications = Application::all();
+            if(isset($request->name) && !empty($request->name)) {
+                $applications = Application::where('name', 'LIKE', '%' . $request->name . '%')->get();
+            } else {
+                $applications = Application::all();
+            }
 
             if (count($applications) > 0) {
                 $response = [
@@ -112,15 +116,37 @@ class ApplicationController extends Controller
      * @param  \App\Application  $application
      * @return \Illuminate\Http\Response
      */
-    public function show(Application $application)
+    public function show(Request $request, $id)
     {
-        //
+        try {
+            $applications = Application::where('id', $id)->with('workExperiences')->first();
+
+            if ($applications) {
+                $response = [
+                    'msg' => 'View Applications',
+                    'status' => 1,
+                    'applications' => $applications,
+                ];
+            } else {
+                $response = [
+                    'msg' => 'No application found',
+                    'status' => 0,
+                ];
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'msg' => $e->getMessage() . " " . $e->getFile() . " " . $e->getLine(),
+                'status' => 0,
+            ];
+        }
+
+        return response()->json($response);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Application  $application
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)

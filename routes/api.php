@@ -22,6 +22,7 @@ Route::get('/widgets', 'Api\DashboardController@widgets');
 Route::prefix('application')->group(function () {
     Route::post('/submit', 'Api\ApplicationController@store');
     Route::get('/get-applications', 'Api\ApplicationController@index');
+    Route::get('/show/{id}', 'Api\ApplicationController@show');
     Route::post('/edit', 'Api\ApplicationController@edit');
     Route::post('/update', 'Api\ApplicationController@update');
     Route::post('/delete', 'Api\ApplicationController@destroy');

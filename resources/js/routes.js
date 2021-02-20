@@ -6,6 +6,7 @@ import Application from "./components/Application";
 //Application
 import ListApplication from "./components/Applications/ListApplication";
 import EditApplication from "./components/Applications/EditApplication";
+import ViewApplication from "./components/Applications/ViewApplication";
 
 const router = [
   {
@@ -36,6 +37,11 @@ const router = [
       {
         path: "edit-application/*",
         component: EditApplication,
+        default: true
+      },
+      {
+        path: "view-application/*",
+        component: ViewApplication,
         default: true
       }
     ]

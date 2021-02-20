@@ -6,6 +6,23 @@
       </span>
     </div>
 
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card mb-4">
+          <h6 class="card-header">Search</h6>
+          <div class="card-body">
+            <form method="GET" v-on:submit.prevent="search">
+              <label>Name</label>
+              <input type="text" v-model="name"/>
+              <button type="submit"> Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+              
+
     <table class="table">
       <thead>
         <tr>
@@ -25,6 +42,11 @@
           <td>{{ application.gender }}</td>
           <td>{{ application.contact }}</td>
           <td>
+            <i
+              style="cursor:pointer;"
+              @click="viewApplication(application.id)"
+              class="far fa-eye text-success mr-1"
+            ></i>
             <i
               style="cursor:pointer;"
               @click="editApplication(application.id)"
@@ -49,7 +71,8 @@ export default {
   mixins: [notification],
   data() {
     return {
-      applications: {}
+      applications: {},
+      name: '',
     };
   },
   mounted() {
@@ -57,8 +80,14 @@ export default {
   },
   methods: {
     getApplication() {
+      let param = '';
+      let name = this.$route.query.name;
+      if(name) {
+        param = '?name='+this.$route.query.name;
+      }
+      this.name = this.$route.query.name;
       axios
-        .get("api/application/get-applications")
+        .get("api/application/get-applications"+param)
         .then(response => {
           if (response.data.status) {
             this.applications = response.data.applications;
@@ -70,6 +99,10 @@ export default {
     },
     editApplication(id) {
       const path = `/admin/edit-application/${id}`;
+      if (this.$router.path !== path) this.$router.push(path);
+    },
+    viewApplication(id) {
+      const path = `/admin/view-application/${id}`;
       if (this.$router.path !== path) this.$router.push(path);
     },
     deleteApplication(id) {
@@ -86,6 +119,26 @@ export default {
             window.location.reload();
           } else {
             this.error(response.data.msg);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search() {
+      let name = this.name;
+      const path = `/admin/applications?name=`+this.name;
+      this.$router.push(path);
+      window.location.reload();
+    }
+  },
+  computed: {
+    applicationData: function(){
+      axios
+        .get("api/application/get-applications"+param)
+        .then(response => {
+          if (response.data.status) {
+            return response.data.applications;
           }
         })
         .catch(error => {

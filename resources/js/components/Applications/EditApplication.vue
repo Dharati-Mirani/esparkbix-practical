@@ -476,137 +476,137 @@ export default {
             axios
             .post("/api/application/edit", payLoad)
             .then(response => {
-            if (response.data.status) {
-                this.name = response.data.application.name;
-                this.email = response.data.application.email;
-                this.address = response.data.application.address;
-                this.contact = response.data.application.contact;
-                this.board = response.data.application.board;
-                this.year = response.data.application.year;
-                this.percentage = response.data.application.percentage;
-                this.experience = response.data.application.work_experiences;
-                this.gender = response.data.application.gender;
-                this.location = response.data.application.location;
-                this.cctc = response.data.application.cctc;
-                this.ectc = response.data.application.ectc;
-                this.noticePeriod = response.data.application.notice_period;
-                let language = JSON.parse(response.data.application.language);
-                let technicalExp = JSON.parse(response.data.application.technical_experience);
-                if(language.hindi) {
-                    let hindi = language.hindi;
-                    let that = this;
-                    that.hindi = true;
-                    hindi.forEach(function(lang) {
-                        if(lang === 'Write') {
-                            that.hindiWrite = true;
-                        }
-                        if(lang === 'Read') {
-                            that.hindiRead = true;
-                        }
-                        if(lang === 'Speak') {
-                            that.hindiSpeak = true;
-                        }
-                    });
+                if (response.data.status) {
+                    this.name = response.data.application.name;
+                    this.email = response.data.application.email;
+                    this.address = response.data.application.address;
+                    this.contact = response.data.application.contact;
+                    this.board = response.data.application.board;
+                    this.year = response.data.application.year;
+                    this.percentage = response.data.application.percentage;
+                    this.experience = response.data.application.work_experiences;
+                    this.gender = response.data.application.gender;
+                    this.location = response.data.application.location;
+                    this.cctc = response.data.application.cctc;
+                    this.ectc = response.data.application.ectc;
+                    this.noticePeriod = response.data.application.notice_period;
+                    let language = JSON.parse(response.data.application.language);
+                    let technicalExp = JSON.parse(response.data.application.technical_experience);
+                    if(language.hindi) {
+                        let hindi = language.hindi;
+                        let that = this;
+                        that.hindi = true;
+                        hindi.forEach(function(lang) {
+                            if(lang === 'Write') {
+                                that.hindiWrite = true;
+                            }
+                            if(lang === 'Read') {
+                                that.hindiRead = true;
+                            }
+                            if(lang === 'Speak') {
+                                that.hindiSpeak = true;
+                            }
+                        });
+                    }
+                    if(language.english) {
+                        let english = language.english;
+                        let that = this;
+                        that.english = true;
+                        english.forEach(function(lang) {
+                            if(lang === 'Write') {
+                                that.englishWrite = true;
+                            }
+                            if(lang === 'Read') {
+                                that.englishRead = true;
+                            }
+                            if(lang === 'Speak') {
+                                that.englishSpeak = true;
+                            }
+                        });
+                    }
+                    if(language.gujarati) {
+                        let guj = language.gujarati;
+                        let that = this;
+                        that.gujarati = true;
+                        guj.forEach(function(lang) {
+                            if(lang === 'Write') {
+                                that.gujWrite = true;
+                            }
+                            if(lang === 'Read') {
+                                that.gujRead = true;
+                            }
+                            if(lang === 'Speak') {
+                                that.gujSpeak = true;
+                            }
+                        });
+                    }
+                    if(technicalExp.php) {
+                        let php = technicalExp.php;
+                        let that = this;
+                        that.php = true;
+                        php.forEach(function(lang) {
+                            if(lang === 'Beginner') {
+                                that.phpBeginner = true;
+                            }
+                            if(lang === 'Mediator') {
+                                that.phpMediator = true;
+                            }
+                            if(lang === 'Expert') {
+                                that.phpExpert = true;
+                            }
+                        });
+                    }
+                    if(technicalExp.mysql) {
+                        let mysql = technicalExp.mysql;
+                        let that = this;
+                        that.mysql = true;
+                        mysql.forEach(function(lang) {
+                            if(lang === 'Beginner') {
+                                that.mysqlBeginner = true;
+                            }
+                            if(lang === 'Mediator') {
+                                that.mysqlMediator = true;
+                            }
+                            if(lang === 'Expert') {
+                                that.mysqlExpert = true;
+                            }
+                        });
+                    }
+                    if(technicalExp.laravel) {
+                        let laravel = technicalExp.laravel;
+                        let that = this;
+                        that.laravel = true;
+                        laravel.forEach(function(lang) {
+                            if(lang === 'Beginner') {
+                                that.laravelBeginner = true;
+                            }
+                            if(lang === 'Mediator') {
+                                that.laravelMediator = true;
+                            }
+                            if(lang === 'Expert') {
+                                that.laravelExpert = true;
+                            }
+                        });
+                    }
+                    if(technicalExp.oracle) {
+                        let oracle = technicalExp.oracle;
+                        let that = this;
+                        that.oracle = true;
+                        oracle.forEach(function(lang) {
+                            if(lang === 'Beginner') {
+                                that.oracleBeginner = true;
+                            }
+                            if(lang === 'Mediator') {
+                                that.oracleMediator = true;
+                            }
+                            if(lang === 'Expert') {
+                                that.oracleExpert = true;
+                            }
+                        });
+                    }
+                } else {
+                    this.$router.push("/admin/applications");
                 }
-                if(language.english) {
-                    let english = language.english;
-                    let that = this;
-                    that.english = true;
-                    english.forEach(function(lang) {
-                        if(lang === 'Write') {
-                            that.englishWrite = true;
-                        }
-                        if(lang === 'Read') {
-                            that.englishRead = true;
-                        }
-                        if(lang === 'Speak') {
-                            that.englishSpeak = true;
-                        }
-                    });
-                }
-                if(language.gujarati) {
-                    let guj = language.gujarati;
-                    let that = this;
-                    that.gujarati = true;
-                    guj.forEach(function(lang) {
-                        if(lang === 'Write') {
-                            that.gujWrite = true;
-                        }
-                        if(lang === 'Read') {
-                            that.gujRead = true;
-                        }
-                        if(lang === 'Speak') {
-                            that.gujSpeak = true;
-                        }
-                    });
-                }
-                if(technicalExp.php) {
-                    let php = technicalExp.php;
-                    let that = this;
-                    that.php = true;
-                    php.forEach(function(lang) {
-                        if(lang === 'Beginner') {
-                            that.phpBeginner = true;
-                        }
-                        if(lang === 'Mediator') {
-                            that.phpMediator = true;
-                        }
-                        if(lang === 'Expert') {
-                            that.phpExpert = true;
-                        }
-                    });
-                }
-                if(technicalExp.mysql) {
-                    let mysql = technicalExp.mysql;
-                    let that = this;
-                    that.mysql = true;
-                    mysql.forEach(function(lang) {
-                        if(lang === 'Beginner') {
-                            that.mysqlBeginner = true;
-                        }
-                        if(lang === 'Mediator') {
-                            that.mysqlMediator = true;
-                        }
-                        if(lang === 'Expert') {
-                            that.mysqlExpert = true;
-                        }
-                    });
-                }
-                if(technicalExp.laravel) {
-                    let laravel = technicalExp.laravel;
-                    let that = this;
-                    that.laravel = true;
-                    laravel.forEach(function(lang) {
-                        if(lang === 'Beginner') {
-                            that.laravelBeginner = true;
-                        }
-                        if(lang === 'Mediator') {
-                            that.laravelMediator = true;
-                        }
-                        if(lang === 'Expert') {
-                            that.laravelExpert = true;
-                        }
-                    });
-                }
-                if(technicalExp.oracle) {
-                    let oracle = technicalExp.oracle;
-                    let that = this;
-                    that.oracle = true;
-                    oracle.forEach(function(lang) {
-                        if(lang === 'Beginner') {
-                            that.oracleBeginner = true;
-                        }
-                        if(lang === 'Mediator') {
-                            that.oracleMediator = true;
-                        }
-                        if(lang === 'Expert') {
-                            that.oracleExpert = true;
-                        }
-                    });
-                }
-            } else {
-                this.$router.push("/admin/applications");
-            }
             })
             .catch(error => {
             console.log(error);
