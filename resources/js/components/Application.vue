@@ -3,8 +3,8 @@
     <h1>Application Form</h1>
     <p>Please fill in this form to job application.</p>
     <hr>
-    <ValidationObserver v-slot="{ invalid }">
-        <form method="POST" v-on:submit.prevent="submit" id="form">
+    <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form" @submit.prevent="submit()">
+        <!-- <form method="POST" id="form"> -->
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
                 <validation-provider
@@ -256,27 +256,111 @@
                 <div class="group-checkbox">
                     <div>
                         <label><input type="checkbox" v-model="php"> PHP</label>
-                        <label><input type="checkbox" v-model="phpBeginner" v-bind:disabled="php === false"> Beginner</label>
-                        <label><input type="checkbox" v-model="phpMediator" v-bind:disabled="php === false"> Mediator</label>
-                        <label><input type="checkbox" v-model="phpExpert" v-bind:disabled="php === false"> Expert</label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="phpData" 
+                                value="Beginner"
+                                :disabled="php === false"> 
+                                Beginner
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="phpData" 
+                                value="Mediator"
+                                :disabled="php === false"> 
+                                Mediator
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="phpData" 
+                                value="Expert"
+                                :disabled="php === false"> 
+                                Expert
+                        </label>
                     </div>
                     <div>
                         <label><input type="checkbox" v-model="mysql"> MySql</label>
-                        <label><input type="checkbox" v-model="mysqlBeginner" v-bind:disabled="mysql === false"> Beginner</label>
-                        <label><input type="checkbox" v-model="mysqlMediator" v-bind:disabled="mysql === false"> Mediator</label>
-                        <label><input type="checkbox" v-model="mysqlExpert" v-bind:disabled="mysql === false"> Expert</label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="mysqlData" 
+                                value="Beginner"
+                                :disabled="mysql === false"> 
+                                Beginner
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="mysqlData" 
+                                value="Mediator"
+                                :disabled="mysql === false">
+                                Mediator
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="mysqlData" 
+                                value="Expert"
+                                :disabled="mysql === false">
+                                Expert
+                        </label>
                     </div>
                     <div>
                         <label><input type="checkbox" v-model="laravel"> Laravel</label>
-                        <label><input type="checkbox" v-model="laravelBeginner" v-bind:disabled="laravel === false"> Beginner</label>
-                        <label><input type="checkbox" v-model="laravelMediator" v-bind:disabled="laravel === false"> Mediator</label>
-                        <label><input type="checkbox" v-model="laravelExpert" v-bind:disabled="laravel === false"> Expert</label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="laravelData" 
+                                value="Beginner"
+                                :disabled="laravel === false"> 
+                                Beginner
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="laravelData" 
+                                value="Mediator"
+                                :disabled="laravel === false">
+                                Mediator
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="laravelData" 
+                                value="Expert"
+                                :disabled="laravel === false">
+                                Expert
+                        </label>
                     </div>
                     <div>
                         <label><input type="checkbox" v-model="oracle"> Oracle</label>
-                        <label><input type="checkbox" v-model="oracleBeginner" v-bind:disabled="oracle === false"> Beginner</label>
-                        <label><input type="checkbox" v-model="oracleMediator" v-bind:disabled="oracle === false"> Mediator</label>
-                        <label><input type="checkbox" v-model="oracleExpert" v-bind:disabled="oracle === false"> Expert</label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="oracleData" 
+                                value="Beginner"
+                                :disabled="oracle === false"> 
+                                Beginner
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="oracleData" 
+                                value="Mediator"
+                                :disabled="oracle === false">
+                                Mediator
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                v-model="oracleData" 
+                                value="Expert"
+                                :disabled="oracle === false">
+                                Expert
+                        </label>
                     </div>
                 </div>
             </div>
@@ -377,14 +461,12 @@
         
             <div class="clearfix">
                 <button 
-                    type="submit" 
                     class="signupbtn"
-                    :disabled="invalid" 
                     >
                     <strong>Apply</strong>
                 </button>
             </div>
-        </form>
+        <!-- </form> -->
     </ValidationObserver>
   </div>
 </template>
@@ -422,21 +504,13 @@ export default {
             gujWrite: false,
             gujSpeak: false,
             php: false,
-            phpBeginner: false,
-            phpMediator: false,
-            phpExpert: false,
+            phpData: '',
             mysql: false,
-            mysqlBeginner: false,
-            mysqlMediator: false,
-            mysqlExpert: false,
+            mysqlData: '',
             laravel: false,
-            laravelBeginner: false,
-            laravelMediator: false,
-            laravelExpert: false,
+            laravelData: '',
             oracle: false,
-            oracleBeginner: false,
-            oracleMediator: false,
-            oracleExpert: false,
+            oracleData: '',
         };
     },
     mixins: [notification],
@@ -456,141 +530,104 @@ export default {
         deleteRow(index) {
             this.experience.splice(index,1)
         },
-        submit: function(event) {
-            let technicalExp = {};
-            let languages = {};
+        async submit() {
+            const valid = await this.$refs.observer.validate();
+            if(valid) {
+                let technicalExp = {};
+                let languages = {};
 
-            if(this.php) {
-                let php = [];
-                if(this.phpBeginner) {
-                    php.push('Beginner');
+                if(this.php) {
+                    let php = this.phpData;
+                    technicalExp.php = php;
                 }
-                if(this.phpMediator) {
-                    php.push('Mediator');
+                if(this.mysql) {
+                    let mysql = this.mysqlData;
+                    technicalExp.mysql = mysql;
                 }
-                if(this.phpExpert) {
-                    php.push('Expert');
+                if(this.laravel) {
+                    let laravel = this.laravelData;
+                    technicalExp.laravel = laravel;
                 }
-                technicalExp.php = php;
+                if(this.oracle) {
+                    let oracle = this.laravelData;
+                    technicalExp.oracle = oracle;
+                }
+
+                if(this.hindi) {
+                    let hindi = [];
+                    if(this.hindiRead) {
+                        hindi.push('Read');
+                    }
+                    if(this.hindiWrite) {
+                        hindi.push('Write');
+                    }
+                    if(this.hindiSpeak) {
+                        hindi.push('Speak');
+                    }
+                    languages.hindi = hindi;
+                }
+
+                if(this.english) {
+                    let english = [];
+                    if(this.englishRead) {
+                        english.push('Read');
+                    }
+                    if(this.englishWrite) {
+                        english.push('Write');
+                    }
+                    if(this.englishSpeak) {
+                        english.push('Speak');
+                    }
+                    languages.english = english;
+                }
+
+                if(this.gujarati) {
+                    let gujarati = [];
+                    if(this.gujRead) {
+                        gujarati.push('Read');
+                    }
+                    if(this.gujWrite) {
+                        gujarati.push('Write');
+                    }
+                    if(this.gujSpeak) {
+                        gujarati.push('Speak');
+                    }
+                    languages.gujarati = gujarati;
+                }
+
+
+                const payLoad = {
+                    name: this.name,
+                    email: this.email,
+                    address: this.address,
+                    contact: this.contact,
+                    board: this.board,
+                    percentage: this.percentage,
+                    year: this.year,
+                    gender: this.gender,
+                    location: this.location,
+                    cctc: this.cctc,
+                    ectc: this.ectc,
+                    noticePeriod: this.noticePeriod,
+                    workExperience: this.experience,
+                    technicalExp: technicalExp,
+                    languages: languages
+                };
+
+                axios
+                    .post("/api/application/submit", payLoad)
+                    .then(response => {
+                        if (response.data.status) {
+                            this.success(response.data.msg);
+                            window.location.reload();
+                        } else {
+                            this.error(response.data.msg);
+                        }
+                    })
+                    .catch(error => {
+                        this.error(error);
+                    });
             }
-            if(this.mysql) {
-                let mysql = [];
-                if(this.mysqlBeginner) {
-                    mysql.push('Beginner');
-                }
-                if(this.mysqlMediator) {
-                    mysql.push('Mediator');
-                }
-                if(this.mysqlExpert) {
-                    mysql.push('Expert');
-                }
-                technicalExp.mysql = mysql;
-            }
-            if(this.laravel) {
-                let laravel = [];
-                if(this.laravelBeginner) {
-                    laravel.push('Beginner');
-                }
-                if(this.laravelMediator) {
-                    laravel.push('Mediator');
-                }
-                if(this.laravelExpert) {
-                    laravel.push('Expert');
-                }
-                technicalExp.laravel = laravel;
-            }
-            if(this.oracle) {
-                let oracle = [];
-                if(this.oracleBeginner) {
-                    oracle.push('Beginner');
-                }
-                if(this.oracleMediator) {
-                    oracle.push('Mediator');
-                }
-                if(this.oracleExpert) {
-                    oracle.push('Expert');
-                }
-                technicalExp.oracle = oracle;
-            }
-
-            if(this.hindi) {
-                let hindi = [];
-                if(this.hindiRead) {
-                    hindi.push('Read');
-                }
-                if(this.hindiWrite) {
-                    hindi.push('Write');
-                }
-                if(this.hindiSpeak) {
-                    hindi.push('Speak');
-                }
-                languages.hindi = hindi;
-            }
-
-            if(this.english) {
-                let english = [];
-                if(this.englishRead) {
-                    english.push('Read');
-                }
-                if(this.englishWrite) {
-                    english.push('Write');
-                }
-                if(this.englishSpeak) {
-                    english.push('Speak');
-                }
-                languages.english = english;
-            }
-
-            if(this.gujarati) {
-                let gujarati = [];
-                if(this.gujRead) {
-                    gujarati.push('Read');
-                }
-                if(this.gujWrite) {
-                    gujarati.push('Write');
-                }
-                if(this.gujSpeak) {
-                    gujarati.push('Speak');
-                }
-                languages.gujarati = gujarati;
-            }
-
-
-            const payLoad = {
-                name: this.name,
-                email: this.email,
-                address: this.address,
-                contact: this.contact,
-                board: this.board,
-                percentage: this.percentage,
-                year: this.year,
-                gender: this.gender,
-                location: this.location,
-                cctc: this.cctc,
-                ectc: this.ectc,
-                noticePeriod: this.noticePeriod,
-                workExperience: this.experience,
-                technicalExp: technicalExp,
-                languages: languages
-            };
-
-            axios
-                .post("/api/application/submit", payLoad)
-                .then(response => {
-                if (response.data.status) {
-                    this.success(response.data.msg);
-                    window.location.reload();
-                } else {
-                    this.error(response.data.msg);
-                }
-                })
-                .catch(error => {
-                this.error(error);
-                });
-
-            var frm = document.getElementById('form');
-            frm.reset();  // Reset
-            return false; // Prevent page refresh
         }
     }
 

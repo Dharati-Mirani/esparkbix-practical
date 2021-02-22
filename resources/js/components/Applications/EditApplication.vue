@@ -258,27 +258,111 @@
                     <div class="group-checkbox">
                         <div>
                             <label><input type="checkbox" v-model="php"> PHP</label>
-                            <label><input type="checkbox" v-model="phpBeginner" v-bind:disabled="php === false"> Beginner</label>
-                            <label><input type="checkbox" v-model="phpMediator" v-bind:disabled="php === false"> Mediator</label>
-                            <label><input type="checkbox" v-model="phpExpert" v-bind:disabled="php === false"> Expert</label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="phpData" 
+                                    value="Beginner"
+                                    :disabled="php === false"> 
+                                    Beginner
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="phpData" 
+                                    value="Mediator"
+                                    :disabled="php === false"> 
+                                    Mediator
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="phpData" 
+                                    value="Expert"
+                                    :disabled="php === false"> 
+                                    Expert
+                            </label>
                         </div>
                         <div>
                             <label><input type="checkbox" v-model="mysql"> MySql</label>
-                            <label><input type="checkbox" v-model="mysqlBeginner" v-bind:disabled="mysql === false"> Beginner</label>
-                            <label><input type="checkbox" v-model="mysqlMediator" v-bind:disabled="mysql === false"> Mediator</label>
-                            <label><input type="checkbox" v-model="mysqlExpert" v-bind:disabled="mysql === false"> Expert</label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="mysqlData" 
+                                    value="Beginner"
+                                    :disabled="mysql === false"> 
+                                    Beginner
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="mysqlData" 
+                                    value="Mediator"
+                                    :disabled="mysql === false">
+                                    Mediator
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="mysqlData" 
+                                    value="Expert"
+                                    :disabled="mysql === false">
+                                    Expert
+                            </label>
                         </div>
                         <div>
                             <label><input type="checkbox" v-model="laravel"> Laravel</label>
-                            <label><input type="checkbox" v-model="laravelBeginner" v-bind:disabled="laravel === false"> Beginner</label>
-                            <label><input type="checkbox" v-model="laravelMediator" v-bind:disabled="laravel === false"> Mediator</label>
-                            <label><input type="checkbox" v-model="laravelExpert" v-bind:disabled="laravel === false"> Expert</label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="laravelData" 
+                                    value="Beginner"
+                                    :disabled="laravel === false"> 
+                                    Beginner
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="laravelData" 
+                                    value="Mediator"
+                                    :disabled="laravel === false">
+                                    Mediator
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="laravelData" 
+                                    value="Expert"
+                                    :disabled="laravel === false">
+                                    Expert
+                            </label>
                         </div>
                         <div>
                             <label><input type="checkbox" v-model="oracle"> Oracle</label>
-                            <label><input type="checkbox" v-model="oracleBeginner" v-bind:disabled="oracle === false"> Beginner</label>
-                            <label><input type="checkbox" v-model="oracleMediator" v-bind:disabled="oracle === false"> Mediator</label>
-                            <label><input type="checkbox" v-model="oracleExpert" v-bind:disabled="oracle === false"> Expert</label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="oracleData" 
+                                    value="Beginner"
+                                    :disabled="oracle === false"> 
+                                    Beginner
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="oracleData" 
+                                    value="Mediator"
+                                    :disabled="oracle === false">
+                                    Mediator
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio" 
+                                    v-model="oracleData" 
+                                    value="Expert"
+                                    :disabled="oracle === false">
+                                    Expert
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -429,21 +513,13 @@ export default {
             gujWrite: false,
             gujSpeak: false,
             php: false,
-            phpBeginner: false,
-            phpMediator: false,
-            phpExpert: false,
+            phpData: '',
             mysql: false,
-            mysqlBeginner: false,
-            mysqlMediator: false,
-            mysqlExpert: false,
+            mysqlData: '',
             laravel: false,
-            laravelBeginner: false,
-            laravelMediator: false,
-            laravelExpert: false,
+            laravelData: '',
             oracle: false,
-            oracleBeginner: false,
-            oracleMediator: false,
-            oracleExpert: false,
+            oracleData: '',
             deletedRow: [],
         };
     },
@@ -542,67 +618,23 @@ export default {
                     }
                     if(technicalExp.php) {
                         let php = technicalExp.php;
-                        let that = this;
-                        that.php = true;
-                        php.forEach(function(lang) {
-                            if(lang === 'Beginner') {
-                                that.phpBeginner = true;
-                            }
-                            if(lang === 'Mediator') {
-                                that.phpMediator = true;
-                            }
-                            if(lang === 'Expert') {
-                                that.phpExpert = true;
-                            }
-                        });
+                        this.php = true;
+                        this.phpData = php;
                     }
                     if(technicalExp.mysql) {
                         let mysql = technicalExp.mysql;
-                        let that = this;
-                        that.mysql = true;
-                        mysql.forEach(function(lang) {
-                            if(lang === 'Beginner') {
-                                that.mysqlBeginner = true;
-                            }
-                            if(lang === 'Mediator') {
-                                that.mysqlMediator = true;
-                            }
-                            if(lang === 'Expert') {
-                                that.mysqlExpert = true;
-                            }
-                        });
+                        this.mysql = true;
+                        this.mysqlData = mysql;
                     }
                     if(technicalExp.laravel) {
                         let laravel = technicalExp.laravel;
-                        let that = this;
-                        that.laravel = true;
-                        laravel.forEach(function(lang) {
-                            if(lang === 'Beginner') {
-                                that.laravelBeginner = true;
-                            }
-                            if(lang === 'Mediator') {
-                                that.laravelMediator = true;
-                            }
-                            if(lang === 'Expert') {
-                                that.laravelExpert = true;
-                            }
-                        });
+                        this.laravel = true;
+                        this.laravelData = laravel;
                     }
                     if(technicalExp.oracle) {
                         let oracle = technicalExp.oracle;
-                        let that = this;
-                        that.oracle = true;
-                        oracle.forEach(function(lang) {
-                            if(lang === 'Beginner') {
-                                that.oracleBeginner = true;
-                            }
-                            if(lang === 'Mediator') {
-                                that.oracleMediator = true;
-                            }
-                            if(lang === 'Expert') {
-                                that.oracleExpert = true;
-                            }
-                        });
+                        this.oracle = true;
+                        this.oracleData = oracle;
                     }
                 } else {
                     this.$router.push("/admin/applications");
@@ -618,57 +650,22 @@ export default {
             let languages = {};
 
             if(this.php) {
-                let php = [];
-                if(this.phpBeginner) {
-                    php.push('Beginner');
-                }
-                if(this.phpMediator) {
-                    php.push('Mediator');
-                }
-                if(this.phpExpert) {
-                    php.push('Expert');
-                }
+                let php = this.phpData;
                 technicalExp.php = php;
             }
             if(this.mysql) {
-                let mysql = [];
-                if(this.mysqlBeginner) {
-                    mysql.push('Beginner');
-                }
-                if(this.mysqlMediator) {
-                    mysql.push('Mediator');
-                }
-                if(this.mysqlExpert) {
-                    mysql.push('Expert');
-                }
+                let mysql = this.mysqlData;
                 technicalExp.mysql = mysql;
             }
             if(this.laravel) {
-                let laravel = [];
-                if(this.laravelBeginner) {
-                    laravel.push('Beginner');
-                }
-                if(this.laravelMediator) {
-                    laravel.push('Mediator');
-                }
-                if(this.laravelExpert) {
-                    laravel.push('Expert');
-                }
+                let laravel = this.laravelData;
                 technicalExp.laravel = laravel;
             }
             if(this.oracle) {
-                let oracle = [];
-                if(this.oracleBeginner) {
-                    oracle.push('Beginner');
-                }
-                if(this.oracleMediator) {
-                    oracle.push('Mediator');
-                }
-                if(this.oracleExpert) {
-                    oracle.push('Expert');
-                }
+                let oracle = this.oracleData;
                 technicalExp.oracle = oracle;
             }
+            
 
             if(this.hindi) {
                 let hindi = [];
