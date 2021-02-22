@@ -3,8 +3,12 @@
     <h1>Application Form</h1>
     <p>Please fill in this form to job application.</p>
     <hr>
+    <small
+        class="text-danger font-weight-bold"
+        style="font-size: 11px">
+        {{ backend_error }}
+    </small>
     <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form" @submit.prevent="submit()">
-        <!-- <form method="POST" id="form"> -->
             <div class="form-group">
                 <label for="name"><b>Name</b></label>
                 <validation-provider
@@ -466,7 +470,6 @@
                     <strong>Apply</strong>
                 </button>
             </div>
-        <!-- </form> -->
     </ValidationObserver>
   </div>
 </template>
@@ -511,6 +514,7 @@ export default {
             laravelData: '',
             oracle: false,
             oracleData: '',
+            backend_error:''
         };
     },
     mixins: [notification],
@@ -619,15 +623,53 @@ export default {
                     .then(response => {
                         if (response.data.status) {
                             this.success(response.data.msg);
-                            window.location.reload();
+                            // window.location.reload();
                         } else {
                             this.error(response.data.msg);
+                            this.backend_error = response.data.msg;
+                            this.clearFormData();
                         }
                     })
                     .catch(error => {
                         this.error(error);
                     });
             }
+        },
+        clearFormData() {
+            this.name = '';
+            this.email = '';
+            this.address = '';
+            this.contact = '';
+            this.board = '';
+            this.year = '';
+            this.percentage = '';
+            this.experience = [];
+            this.gender = '';
+            this.location = '';
+            this.cctc = '';
+            this.ectc = '';
+            this.noticePeriod = '';
+            this.hindi = false;
+            this.english = false;
+            this.gujarati = false;
+            this.hindiRead = false;
+            this.hindiWrite = false;
+            this.hindiSpeak = false;
+            this.englishRead = false;
+            this.englishWrite = false;
+            this.englishSpeak = false;
+            this.gujRead = false;
+            this.gujWrite = false;
+            this.gujSpeak = false;
+            this.php = false;
+            this.phpData = '';
+            this.mysql = false;
+            this.mysqlData = '';
+            this.laravel = false;
+            this.laravelData = '';
+            this.oracle = false;
+            this.oracleData = '';
+            this.backend_err = '';
         }
     }
 
